@@ -59,8 +59,6 @@ username : sunil.saini
 password : sunil@123
 ```
 
-[Click Here for API Documantation](https://warped-crater-1182.postman.co/documentation/5313348-0236f6de-79ce-4e35-8fe3-504dd07a37fc/publish?workspaceId=61a11bb1-75df-4d09-824f-a28c5d053ea9)<br>
-
 Postman Collection Link
 ```
 https://www.getpostman.com/collections/bc0e993e702847208e9b
