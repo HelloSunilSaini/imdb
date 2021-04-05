@@ -43,5 +43,4 @@ logger.info("Resource Setup Done.")
 
 if __name__ == '__main__':
     print("app {} started..".format(app))
-    # TODO : move port to env
     app.run(host="0.0.0.0", debug=True, port=8600)

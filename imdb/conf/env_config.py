@@ -16,6 +16,10 @@ class Singleton(type):
 class Config(object):
     __metaclass__ = Singleton
 
+    DB_USER = os.getenv('DB_USER', 'root')
+    DB_PASS = os.getenv('DB_PASS', 'as2d2p')
+    DB_HOST = os.getenv('DB_HOST', 'localhost')
+    
     CORS_ALLOW_HEADERS = ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
     CORS_ALLOW_ORIGIN = ['*']
     LOGGER_CONFIG = {
