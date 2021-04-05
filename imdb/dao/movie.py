@@ -1,5 +1,5 @@
 
-from imdb.db.imdb.models import Movie, Genre
+from imdb.db.imdb_db.models import Movie, Genre
 
 def get_movie_by_id(movie_id):
     try:

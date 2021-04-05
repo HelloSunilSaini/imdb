@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class IMDBConfig(AppConfig):
-    name = 'imdb'
+    name = 'imdb_db'
