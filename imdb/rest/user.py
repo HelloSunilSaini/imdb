@@ -12,7 +12,7 @@ logger = get_root_logger()
 class User(Resource):
     @ErrorHandler("User POST")
     def post(self):
-        logger.info("Received User Post request from : " + session.name)
+        logger.info("Received User Post request from : {}".format(session.get("user_id")))
 
         request_body = request.get_json(force=True)
         

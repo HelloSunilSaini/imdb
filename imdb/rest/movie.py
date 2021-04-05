@@ -13,7 +13,7 @@ logger = get_root_logger()
 class Movie(Resource):
     @ErrorHandler("Movie GET")
     def get(self, movie_id=None):
-        logger.info("Received Movie Get request from : " + session.name)
+        logger.info("Received Movie Get request from : {}".format(session.get("user_id")))
         if movie_id:
             response = get_movie_json_by_id(movie_id)
             return ok_response(response)
@@ -36,7 +36,7 @@ class Movie(Resource):
         
     @ErrorHandler("Movie POST")
     def post(self):
-        logger.info("Received Movie Post request from : " + session.name)
+        logger.info("Received Movie Post request from : {}".format(session.get("user_id")))
 
         request_body = request.get_json(force=True)
         
@@ -50,7 +50,7 @@ class Movie(Resource):
             
     @ErrorHandler("Movie PUT")
     def put(self):
-        logger.info("Received Movie Put request from : " + session.name)
+        logger.info("Received Movie Put request from : {}".format(session.get("user_id")))
 
         request_body = request.get_json(force=True)
         
@@ -63,7 +63,7 @@ class Movie(Resource):
     
     @ErrorHandler("Movie DELETE")
     def delete(self,movie_id=None):
-        logger.info("Received Movie Delete request from : " + session.name)
+        logger.info("Received Movie Delete request from : {}".format(session.get("user_id")))
         if not movie_id:
             return error_response(400, "Bad Request")
         remove_movie(movie_id)

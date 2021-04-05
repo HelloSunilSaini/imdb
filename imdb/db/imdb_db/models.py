@@ -39,9 +39,10 @@ class Movie(models.Model):
     
     def as_json(self):
         return dict({
+            "id": self.id,
             "name" : self.name,
             "99popularity" : self.popularity,
             "director" : self.director,
             "imdb_score" : self.imdb_score,
-            "genre" : self.genre.all().values_list('name', flat=True)
+            "genre" : list(self.genre.all().values_list('name', flat=True))
         })

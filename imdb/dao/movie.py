@@ -1,5 +1,9 @@
 
 from imdb.db.imdb_db.models import Movie, Genre
+from django.db.models import Q
+from imdb.utils.logger import get_root_logger
+
+logger = get_root_logger()
 
 def get_movie_by_id(movie_id):
     try:
@@ -10,11 +14,12 @@ def get_movie_by_id(movie_id):
     
 def get_movies_by_search(search_term, limit=20, offset=0):
     try: 
-        movies = Movie.object.filter(
-            name__icontains=search_term, 
-            director__icontains=search_term)[offset : offset+limit]
+        movies = Movie.objects.filter(
+            Q(name__icontains=search_term) | 
+            Q(director__icontains=search_term))
         return movies
-    except:
+    except Exception as e:
+        logger.exception(e)
         return []
 
 def get_movie_obj_by_genre(genre, limit=20, offset=0):
@@ -22,7 +27,8 @@ def get_movie_obj_by_genre(genre, limit=20, offset=0):
         genre_obj = Genre.objects.get(name=genre)
         movies = genre_obj.movie_set.all()[offset : offset+limit]
         return movies
-    except:
+    except Exception as e:
+        logger.exception(e)
         return []
 
 
@@ -39,7 +45,8 @@ def create_movie(movie_data, user):
             genre_obj,_ = Genre.objects.get_or_create(name=genre)
             movie.genre.add(genre_obj)
         return movie
-    except:
+    except Exception as e:
+        logger.exception(e)
         return None
 
 def update_movie(movie_data, user):
@@ -62,12 +69,14 @@ def update_movie(movie_data, user):
                 genre_obj,_ = Genre.objects.get_or_create(name=genre)
                 movie.genre.add(genre_obj)
         return movie
-    except:
+    except Exception as e:
+        logger.exception(e)
         return None
 
 def delete_movie_by_id(movie_id):
     try:
         movie = Movie.object.get(id=movie_id)
         movie.delete()
-    except:
+    except Exception as e:
+        logger.exception(e)
         pass

@@ -5,10 +5,10 @@ from imdb.dao.movie import create_movie, update_movie, get_movie_by_id, \
     delete_movie_by_id, get_movie_obj_by_genre, get_movies_by_search
 
 def add_movie(movie_data):
-    create_movie(movie_data, get_session_user())
+    return create_movie(movie_data, get_session_user())
     
 def update_movie_data(movie_data):
-    update_movie(movie_data, get_session_user())
+    return update_movie(movie_data, get_session_user())
     
 def remove_movie(movie_id):
     if not get_movie_by_id(movie_id):
