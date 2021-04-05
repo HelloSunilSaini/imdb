@@ -1,4 +1,6 @@
 import json
+import django
+django.setup()
 from imdb.dao.movie import create_movie
 
 if __name__=="__main__":
