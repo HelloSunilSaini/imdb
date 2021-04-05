@@ -1,16 +1,14 @@
-try:
-    import cPicle as pickle
-except ImportError:
-    import pickle
-from datetime import datetime, timedelta
+from datetime import timedelta
 import uuid
-
+import json
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session as DjangoSession
 from django.db import close_old_connections
 from flask.sessions import SessionInterface, SecureCookieSession
-import base64
+from imdb.utils.date_time import get_datetime_now
+from imdb.utils.logger import get_root_logger
 
+logger = get_root_logger
 class MySessionInterface(SessionInterface):
 
     pickle_based = True
@@ -22,11 +20,11 @@ class MySessionInterface(SessionInterface):
         try:
             session_obj = DjangoSession.objects.get(
                 session_key=key,
-                expire_date__gte=datetime.now()
+                expire_date__gte=get_datetime_now()
             )
-            dump = str(session_obj.session_data)
+            dump = session_obj.session_data
             try:
-                session = (self.session_class(pickle.loads(base64.b64decode(dump))))
+                session = self.session_class(json.loads(dump))
             except:
                 dump=dump.encode()
                 session = self.session_class(pickle.loads(dump))
@@ -50,8 +48,8 @@ class MySessionInterface(SessionInterface):
         except DjangoSession.DoesNotExist:
             obj = DjangoSession(session_key=session['key'])
         
-        obj.session_data = base64.b64encode(pickle.dumps(dict(session, fix_imports=True)))
-        obj.expire_date =  datetime.now() + timedelta(days=365)
+        obj.session_data = json.dumps(dict(session, fix_imports=True))
+        obj.expire_date =  get_datetime_now() + timedelta(days=365)
         obj.save()
         
         close_old_connections()

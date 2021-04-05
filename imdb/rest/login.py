@@ -13,7 +13,7 @@ class Login(Resource):
     def post(self):
         request_data = request.get_json(force=True)
         logger.info("Received login request")
-        if validate_login_request(request_data):
+        if not validate_login_request(request_data):
             return error_response(400, "Bad Request")
         response = validate_user(request_data)
         if response:

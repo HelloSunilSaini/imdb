@@ -3,8 +3,6 @@ from functools import wraps
 from flask import request, session, current_app as app
 from flask_restful import Resource
 
-from agriinputsalesmapping.constants.user import AIC_USER_ROLE, DOA_ADMIN_ROLE, DOA_USER_ROLE
-
 headers_mapping = {
     'csv': {'content-type': 'application/csv'},
     'json': {'content-type': 'application/json'},
@@ -39,7 +37,7 @@ def authenticate(func):
     def wrapper(*args, **kwargs):
         if not getattr(func, 'authenticated', True):
             return func(*args, **kwargs)
-        if session.username:
+        if session.get('user_id', False):
             return func(*args, **kwargs)
 
         app.logger.error("Unauthorized request from %s", request.remote_addr)
