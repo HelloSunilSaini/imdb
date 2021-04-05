@@ -43,7 +43,7 @@ class Config(object):
         },
         "loggers": {
             "": {
-                "handlers": [os.getenv('LOGGER_FORMAT', 'verbose')],
+                "handlers": [os.getenv('LOGGER_FORMAT', 'detailed')],
                 "level": "DEBUG"
             },
             "werkzeug": {

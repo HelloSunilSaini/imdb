@@ -55,8 +55,8 @@ def validate_movie_post_request(request_body):
 movie_put_schema = {
   "type": "object",
   "properties": {
-    "movie_id": { 
-        "type": "string"
+    "id": { 
+        "type": "number"
     },
     "99popularity": {
       "type": "number",
@@ -84,7 +84,7 @@ movie_put_schema = {
     }
   },
   "required": [
-    "movie_id"
+    "id"
   ]
 }
 

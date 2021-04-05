@@ -9,7 +9,8 @@ def get_movie_by_id(movie_id):
     try:
         movie = Movie.objects.get(id=movie_id)
         return movie
-    except:
+    except Exception as e:
+        logger.exception(e)
         return None
     
 def get_movies_by_search(search_term, limit=20, offset=0):
@@ -51,7 +52,7 @@ def create_movie(movie_data, user):
 
 def update_movie(movie_data, user):
     try:
-        movie = Movie.objects.get(id=movie_data['movie_id'])
+        movie = Movie.objects.get(id=movie_data['id'])
         if movie_data.get('name'):
             movie.name = movie_data['name']
         if movie_data.get('imdb_score'):
@@ -75,7 +76,7 @@ def update_movie(movie_data, user):
 
 def delete_movie_by_id(movie_id):
     try:
-        movie = Movie.object.get(id=movie_id)
+        movie = Movie.objects.get(id=movie_id)
         movie.delete()
     except Exception as e:
         logger.exception(e)
