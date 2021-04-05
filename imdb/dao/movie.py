@@ -13,7 +13,7 @@ def get_movie_by_id(movie_id):
         logger.exception(e)
         return None
     
-def get_movies_by_search(search_term, limit=20, offset=0):
+def get_movies_by_search(search_term):
     try: 
         movies = Movie.objects.filter(
             Q(name__icontains=search_term) | 
@@ -23,10 +23,10 @@ def get_movies_by_search(search_term, limit=20, offset=0):
         logger.exception(e)
         return []
 
-def get_movie_obj_by_genre(genre, limit=20, offset=0):
+def get_movie_obj_by_genre(genre):
     try:
         genre_obj = Genre.objects.get(name=genre)
-        movies = genre_obj.movie_set.all()[offset : offset+limit]
+        movies = genre_obj.movie_set.all()
         return movies
     except Exception as e:
         logger.exception(e)

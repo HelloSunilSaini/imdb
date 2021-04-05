@@ -31,9 +31,30 @@ def get_movie_json_list_by_movies(movies):
     return result
     
 def get_movies_by_genre(genre, limit=20, offset=0):
-    movies = get_movie_obj_by_genre(genre,limit,offset)        
-    return get_movie_json_list_by_movies(movies)
+    movies = get_movie_obj_by_genre(genre)  
+    count = len(movies)
+    if offset >= count:
+        raise CustomError(400, "Bad Request")
+    if count < offset+limit:
+        movies = movies[offset:count]
+    else:
+        movies = movies[offset:offset+limit]
+    return dict({
+        "movies" : get_movie_json_list_by_movies(movies),
+        "count" : count
+    })
+
 
 def get_movies_by_search_term(search_term, limit=20, offset=0):
-    movies = get_movies_by_search(search_term, limit, offset)
-    return get_movie_json_list_by_movies(movies)
+    movies = get_movies_by_search(search_term)
+    count = len(movies)
+    if offset >= count:
+        raise CustomError(400, "Bad Request")
+    if count < offset+limit:
+        movies = movies[offset:count]
+    else:
+        movies = movies[offset:offset+limit]
+    return dict({
+        "movies" : get_movie_json_list_by_movies(movies),
+        "count" : count
+    })
